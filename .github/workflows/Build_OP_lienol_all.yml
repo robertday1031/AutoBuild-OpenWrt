@@ -5,7 +5,7 @@
 # Youtube Channel: https://goo.gl/fvkdwm 
 #=================================================
 
-name: Build_x86_64_lienol
+name: Build_x86_64_lienol_all
 
 on: 
   release:
