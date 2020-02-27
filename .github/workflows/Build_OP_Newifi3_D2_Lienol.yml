@@ -7,16 +7,16 @@
 
 name: Build_OP_Newifi3_D2_Lienol
 
-on: 
-  release:
-    types: [published]
+#on: 
+#  release:
+#    types: [published]
 
   push:
    branches: 
       - master
 
-  #schedule:
-  #  - cron: 0 8 * * 5
+  schedule:
+    - cron: 0 8 * * 5
   
   #watch:
   #  types: [started]
