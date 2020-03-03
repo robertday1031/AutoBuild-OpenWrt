@@ -5,15 +5,15 @@
 # Youtube Channel: https://goo.gl/fvkdwm 
 #=================================================
 
-name: Build_x86_64_lienol
+name: Build_x86_64_Lean_lede
 
 on: 
   release:
     types: [published]
 
-  push:
-   branches: 
-      - master
+  #push:
+  # branches: 
+  #    - master
 
   #schedule:
   #  - cron: 0 8 * * 5
@@ -53,26 +53,22 @@ jobs:
           mysql* \
           php*
         sudo -E apt-get update
-        sudo -E sudo apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex node-uglify gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx-ucl libelf-dev autoconf automake libtool autopoint device-tree-compiler libuv-dev
-        sudo -E apt-get -y autoremove --purge
+        sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex node-uglify gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx-ucl libelf-dev autoconf automake libtool autopoint device-tree-compiler libuv-dev
         sudo -E apt-get -y autoremove --purge
         sudo -E apt-get clean
-
     - name: Clone source code
       env: 
-        REPO_URL: https://github.com/Lienol/openwrt
+        REPO_URL: https://github.com/coolsnowwolf/lede
         REPO_BRANCH: dev-lean-lede
-      run: git clone  $REPO_URL -b $REPO_BRANCH lean-lede
+      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH lean-lede
 
     - name: Update & Install feeds
       working-directory: ./lean-lede
       run: |
-        ./scripts/feeds clean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         ./scripts/feeds install -a
-
-    - name: Configuration Customization - Build_x86_64
+    - name: Configuration Customization - Build_x86_64_lean_lede
       env:
         CONFIG_FILE: 'x86_64_lienol.config'
       run: |
@@ -86,15 +82,13 @@ jobs:
         make download -j$(nproc)
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-
     - name: Build firmware
       working-directory: ./lean-lede
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
-
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt_lean_lede
-        path: lean-lede/bin
+        name: OpenWrt
+path: lean-lede/bin
