@@ -88,7 +88,7 @@ jobs:
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
     - name : Upload artifact
-      uses: actions/upload-artifact@lean-lede
+      uses: actions/upload-artifact@master
       with:
         name: OpenWrt
-path: openwrt/bin
+      path: openwrt/bin
