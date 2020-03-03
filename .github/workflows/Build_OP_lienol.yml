@@ -76,7 +76,7 @@ jobs:
       env:
         CONFIG_FILE: 'x86_64_lienol.config'
       run: |
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lean-lede/.config
         chmod +x ./customize.sh && ./customize.sh
         cd lean-lede && make defconfig
         
