@@ -5,15 +5,15 @@
 # Youtube Channel: https://goo.gl/fvkdwm 
 #=================================================
 
-name: Build_x86_64_Lean_lede
+name: Build_x86_64_lean_lede
 
 on: 
   release:
     types: [published]
 
-  push:
-   branches: 
-      - master
+  #push:
+  # branches: 
+  #    - master
 
   #schedule:
   #  - cron: 0 8 * * 5
@@ -60,30 +60,30 @@ jobs:
       env: 
         REPO_URL: https://github.com/Lienol/openwrt
         REPO_BRANCH: dev-lean-lede
-      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH lean-lede
+      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
 
     - name: Update & Install feeds
-      working-directory: ./lean-lede
+      working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         ./scripts/feeds install -a
-    - name: Configuration Customization - Build_x86_64_lean_lede
+    - name: Configuration Customization - Build_x86_64
       env:
         CONFIG_FILE: 'x86_64_lienol.config'
       run: |
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lean-lede/.config
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x ./customize.sh && ./customize.sh
-        cd lean-lede && make defconfig
+        cd openwrt && make defconfig
         
     - name: Download package
-      working-directory: ./lean-lede
+      working-directory: ./openwrt
       run: |
         make download -j$(nproc)
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
     - name: Build firmware
-      working-directory: ./lean-lede
+      working-directory: ./openwrt
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
@@ -91,4 +91,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: OpenWrt
-path: lean-lede/bin
+path: openwrt/bin
