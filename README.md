@@ -13,5 +13,9 @@ Hereby thank P3TERX for his amazing job: https://github.com/P3TERX/Actions-OpenW
 - When the build is complete, click the `Artifacts` button in the upper right corner of the Actions page to download the binaries.
 
 [For the details please visit my Y2B Channel (in Chinese) | 视频教程](https://www.youtube.com/c/esirplayground)
-x86_64_lean_lede 給x86 64位元軟路由用 使用Lienol基於lean的源碼,綜合SSR+ & Passwall  https://github.com/Lienol/openwrt 分支: dev-lean-lede
-Newifi3_lean_lede 給新Wifi3 D2 Mt7621架構無線路由器用
+
+## 使用Lienol基於lean的源碼,綜合SSR+ & Passwall 
+- https://github.com/Lienol/openwrt 分支: dev-lean-lede
+- Newifi3_lean_lede 給新Wifi3 D2 Mt7621架構無線路由器用
+- x86_64_lean_lede 給x86 64位元軟路由用 
+- 每週五00:00 自動編譯更新
